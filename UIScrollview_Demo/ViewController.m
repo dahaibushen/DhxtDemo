@@ -7,23 +7,35 @@
 //
 
 #import "ViewController.h"
+#import <PureLayout.h>
 
-@interface ViewController ()
-
+@interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property(nonatomic,strong)UITableView *homeTableView;
 @end
 
 @implementation ViewController
+-(UITableView*)homeTableView{
+    if (!_homeTableView) {
+        _homeTableView = [UITableView newAutoLayoutView];
+        [_homeTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+        _homeTableView.delegate = self;
+        _homeTableView.dataSource = self;
+    }
+    return _homeTableView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+   
 }
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class])];
+    return cell;
 }
-
-
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 6;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 120;
+}
 @end
